@@ -1,0 +1,349 @@
+html {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	left: 0;
+	height: 100vh; /* fallback for older browsers */
+	height: calc(100 * var(--vh));
+
+	//global CSS variables ("custom properties")
+	--color-primary: #f72d2d;
+	--color-secondary: rgb(255, 255, 170);
+
+	background-color: var(--white);
+
+	/* sizes */
+	--spacing: 8px;
+	--appbar-height-sm: 48px;
+	--appbar-height-md: 56px;
+	--appbar-height-lg: 64px;
+
+	--vh-full: calc(100 * var(--vh));
+	--vh-full--minus-appbar: calc(100 * var(--vh) - var(--appbar-height));
+	--vw-full: calc(100 * var(--vw));
+
+	/* durations */
+	--enter: 0.4s;
+	--exit: 0.3s;
+	--between-levels: 1s;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font-family: Helvetica, "Nunito", sans-serif;
+}
+
+$spacing: 8px;
+
+#root {
+	height: calc(100 * var(--vh));
+	width: 100%;
+	overflow: hidden; /*for easy page transitions*/
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#root ::selection {
+	color: var(--white, white);
+	background-color: var(--secondary, blue);
+	opacity: 1;
+}
+
+.fullscreen,
+.fullsize,
+.view--entire-screen {
+	height: calc(100%);
+	min-height: calc(100%);
+	width: 100%;
+	top: 0;
+	left: 0;
+	padding: 0;
+	margin: 0;
+	position: static;
+}
+
+.fullscreen {
+	overflow: hidden;
+}
+
+#root {
+	.vh-full {
+		width: var(--vh-full);
+	}
+	.vh-full--minus-appbar {
+		height: var(--vh-full--minus-appbar);
+	}
+	.vw-full {
+		width: var(--vw-full);
+	}
+
+	/* 	**********************
+		 MAX sizes
+		********************** 
+	// when you want the viewport to ignore abrupt size changes (caused by such events as the opening of the mobile keyboard, or disappearance of the address bar), that may cause the orientation to temporarily turn from portarit to landnscape, you can use the following .v*-max--* classes. They will always give the size of the viewport *prior* to any changes, i.e. the maximum possible.
+	// these classes are also friendly to non-mobile devices. In desktop and laptop, they will simply give the full current viewport height, so they will adjust to window resizing.
+	*/
+	.mobile {
+		.vh-max--portrait {
+			height: calc(100 * var(--vh-max--portrait));
+		}
+		.vh-max--portrait---minus-appbar {
+			height: calc(100 * var(--vh-max--portrait) - var(--appbar-height));
+		}
+		.vw-max--portrait {
+			width: calc(100 * var(--vw-max--portrait));
+		}
+		.vw-max--landscape {
+			width: calc(100 * var(--vw-max--landscape));
+		}
+	}
+
+	.desktop-or-laptop {
+		// in non-mobile devices, simply use the current width of the viewport
+		.vw-max--portrait,
+		.vw-max--landscape {
+			width: calc(100 * var(--vw));
+		}
+		.vh-max--portrait,
+		.vh-max--landscape {
+			width: calc(100 * var(--vh));
+		}
+		.vh-max--portrait---minus-appbar,
+		.vh-max--landscape---minus-appbar {
+			height: calc(100 * var(--vh) - var(--appbar-height));
+		}
+	}
+}
+
+/* In desktop and laptops, .max-size will simply set the height to the full current viewport. 
+//In mobile phones, however, .max-height, when coupled with the .portrait-only--phone class, sets the height to the original, full viewport height -- sans the appbar. i.e: Not the current viewport height, which might be a shurnk-version of it when mobile keyboard is open or when the address bar is visible. .max-height is useful for preventing an ugly "jump" between portrait and landscape designs, when entering an input field causes the mobile keyboard to appear, shrink the viewport up to the point where it's landscape-oriented. Another shrinking case is when the address bar disappears after scroll.
+*/
+
+#root {
+	.full-vh--minus-appbar,
+	.max-height {
+		height: calc(100 * var(--vh) - var(--appbar-height));
+		min-height: unset;
+	}
+
+	.full-vh,
+	.max-height--with-appbar {
+		height: calc(100 * var(--vh));
+	}
+
+	.max-vh {
+		//max possible height
+		height: calc(100 * var(--vh-max--portrait));
+	}
+	.max-vh--minus-appbar,
+	.max-height--minus-appbar {
+		//max possible height
+		height: calc(100 * var(--vh-max--portrait) - var(--appbar-height));
+	}
+	.max-vw {
+		//max possible width
+		width: calc(100 * var(--vw-max--landscape));
+	}
+
+	.full-vw,
+	.max-width {
+		width: calc(100 * var(--vw));
+	}
+}
+
+#root {
+	.centered {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.centered-x {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	.centered-y {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+#root .raised {
+	z-index: 1000;
+}
+
+#root .flex {
+	display: flex;
+	flex-flow: column;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+}
+
+#root .unselectable {
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.MuiSvgIcon-root {
+	fill: var(--color-primary);
+}
+
+.glass-container > *,
+.glass {
+	//color: darkgray;
+	border-radius: 8px;
+	padding: 20px;
+	background: rgba(255, 255, 255, 0.2);
+	border: solid 1px rgba(255, 255, 255, 0.3);
+	backgroud-clip: padding-box;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	-webkit-transition: all 0.3;
+	transition: all 0.3;
+}
+
+#root .gradient {
+	background: linear-gradient(to left, var(--canvas), var(--white));
+}
+
+// To add a backdrop to a DOM element, give it a class of "has-before". To add an overlay to an element, give it a class of "has-after". The pseudo-element will be hidden by default.
+//To show the pseudo-element, give its parent element a class of "show-before" or "show-after". To transition it out, give the parent a class of "fadeout-before" or "fadeout-after". To completely hide it and put lower in the z-index stack, give it a class of "hide-before" or "hide-after" (or both).
+
+//using SASS' extend keyword, both :before and :after pseudo elements will have the following rules:
+.pseudo-element {
+	content: "";
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	//hide the pseudo-element
+	z-index: -1;
+	opacity: 0;
+	transition: opacity var(--enter);
+}
+
+.has-before.show-before.before--opacity---0-9 {
+	&:before {
+		opacity: 0.9;
+	}
+}
+
+.has-after {
+	&:after {
+		@extend .pseudo-element;
+	}
+
+	&.show-after {
+		&:after {
+			opacity: 1;
+			transition: opacity 1s;
+			z-index: 201;
+		}
+	}
+	&.fadeout-after {
+		&:after {
+			opacity: 0;
+			transition: opacity var(--between-levels, 1s);
+			z-index: 201;
+		}
+	}
+	&.hide-after {
+		&:after {
+			opacity: 0;
+			z-index: -1;
+		}
+	}
+}
+.has-before {
+	&:before {
+		@extend .pseudo-element;
+		z-index: -1;
+	}
+
+	&.show-before {
+		&:before {
+			opacity: 1;
+			transition: opacity 1s;
+			// z-index: 0;
+		}
+	}
+	&.fadeout-before {
+		&:before {
+			opacity: 0;
+			transition: opacity var(--between-levels, 1s);
+			// z-index: 0;
+		}
+	}
+	&.hide-before {
+		&:before {
+			opacity: 0;
+			z-index: -10;
+		}
+	}
+}
+
+//  effects using :before / :after;
+#root .has-after.white-out {
+	&:after {
+		background-color: var(--white);
+		transition: opacity var(--between-levels, 1s);
+	}
+}
+
+#root .before--bubble {
+	&:before {
+		border-radius: 50%;
+		background-color: var(--transparent-white);
+
+		opacity: 0.25;
+		// box-shadow: $spacing * -1 $spacing $spacing * 4 var(--robe-base);
+		transition: opacity var(--between-levels, 1s);
+		z-index: -1;
+	}
+	&.show-before:before {
+		opacity: 0.25;
+		z-index: -1;
+	}
+	&.hide-before:before {
+		opacity: 0;
+		z-index: -10;
+	}
+}
+
+#root .after--magic-field:after {
+	background-color: var(--robe-base);
+	border-radius: 50%;
+	top: $spacing;
+	left: $spacing;
+	//hide the pseudo-element
+	opacity: 0.25;
+	transition: opacity var(--between-levels, 1s);
+	box-shadow: $spacing * -1 $spacing $spacing * 4 var(--robe-darker-1);
+	z-index: 10;
+}
+#root .after--magic-field.show-after {
+	&:after {
+		opacity: 0.25;
+		z-index: 10;
+	}
+}
+#root .after--magic-field.hide-after {
+	&:after {
+		opacity: 0;
+		z-index: 10;
+	}
+}

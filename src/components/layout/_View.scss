@@ -1,0 +1,103 @@
+#root .view {
+	// height: auto;
+	margin: auto;
+	overflow: hidden;
+	height: 100%;
+
+	--view-bg-color: unset;
+	&.transition-target {
+		will-change: transform;
+	}
+}
+
+.view--responsive {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	margin-top: var(--appbar-height, 48px);
+}
+
+#root .view:not(*.view--responsive) {
+	background-color: var(--view-bg-color, unset);
+}
+
+--view-bg-color #root .portrait .view--responsive {
+	overflow: hidden;
+}
+// #root .landscape .view--responsive {
+// 	overflow: auto;
+// }
+
+#root .landscape,
+.portrait {
+	.view--responsive {
+		// height: calc(100% - var(--appbar-height, 40px));
+		height: calc(var(--vh-full--minus-appbar));
+		// min-height: calc(var(--vh-full--minus-appbar));
+		min-height: calc(100% - var(--appbar-height, 40px));
+		// min-height: unset;
+	}
+}
+
+//Responsive-View styles
+//Adapt to small screens (smart phones), tablets and large screens (desktops)
+// #root .phone {
+// 	&.landscape {
+// 		& .view--responsive {
+// 			height: calc(100% - #{$appbarHeightXs});
+// 			min-height: calc(100% - #{$appbarHeightXs});
+// 		}
+// 	}
+// 	&.portrait {
+// 		& .view--responsive {
+// 			height: calc(100% - #{$appbarHeightSm});
+// 			min-height: calc(100% - #{$appbarHeightSm});
+// 		}
+// 	}
+// }
+
+// #root .tablet {
+// 	&.landscape {
+// 		& .view--responsive {
+// 			height: calc(100% - #{$appbarHeightMd});
+// 			min-height: calc(100% - #{$appbarHeightMd});
+// 		}
+// 	}
+// 	&.portrait {
+// 		& .view--responsive {
+// 			height: calc(100% - #{$appbarHeightMd});
+// 			min-height: calc(100% - #{$appbarHeightMd});
+// 		}
+// 	}
+// }
+
+// #root .large-screen {
+// 	.view--responsive {
+// 		height: calc(100% - #{$appbarHeightLg});
+// 		min-height: calc(100% - #{$appbarHeightLg});
+// 	}
+// }
+
+#root .menu-drawer--is-permanent .view--responsive {
+	//accomodate open sidebar menu
+	margin-left: var(--drawer-width, 48px);
+	width: calc(100% - var(--drawer-width, 48px));
+}
+
+#root .white-in-anim {
+	animation: white-in-anim 0.4s 1;
+	animation-delay: 0s;
+	animation-fill-mode: forwards;
+
+	@keyframes white-in-anim {
+		0% {
+			transform: scale(0.9);
+			opacity: 0;
+		}
+
+		100% {
+			pacity: 1;
+		}
+	}
+}

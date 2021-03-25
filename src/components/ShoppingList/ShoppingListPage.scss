@@ -1,0 +1,52 @@
+.shopping-list--page {
+	height: 100%;
+	display: flex;
+	flex-flow: column;
+	padding: calc(2 * var(--spacing, 8px));
+
+	.search-bar {
+		padding: calc(2 * var(--spacing, 8px)) var(--spacing, 8px);
+	}
+
+	.items-grid {
+		overflow: auto;
+		direction: none;
+		.MuiCardContent-root {
+			padding-bottom: 0;
+		}
+
+		&.has-before {
+			z-index: 1;
+		}
+
+		.item {
+			transition: all 0.2s;
+			opacity: 0.66;
+			&:hover {
+				opacity: 1;
+			}
+			position: relative;
+			cursor: pointer;
+			// img {
+			// 	opacity: 0.5;
+			// }
+			// &.is-selected {
+			// 	img {
+			// 		opacity: 1;
+			// 	}
+			// }
+
+			.add-to-cart-btn {
+				color: var(--primary);
+				fill: var(--primary) !important;
+				.MuiSvgIcon-root {
+					fill: var(--primary) !important;
+				}
+			}
+		}
+	}
+
+	.cart {
+		overflow: auto;
+	}
+}

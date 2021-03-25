@@ -1,0 +1,35 @@
+// .root {
+// 	overflow: auto;
+// 	font-size: 1rem;
+// 	--max-width: 600px;
+
+// 	.container {
+// 		padding: calc(1 * var(--spacing, 8px));
+// 		width: 100%;
+// 		min-width: 300px;
+// 		max-width: var(--max-width, 600px);
+// 		background-color: var(--transparent-white);
+// 		margin: auto;
+// 	}
+
+// 	&.phone {
+// 		--max-width: 300px;
+// 	}
+
+// 	&.tablet {
+// 		--max-width: 700px;
+// 	}
+
+// 	&.largeScreen,
+// 	&.xlScreen {
+// 		--max-width: 800px;
+// 	}
+// }
+
+.root {
+	&:hover {
+		// transform: rotate3d(0, 0, 1, 5deg) scale(0.85);
+		cursor: grab;
+	}
+	position: relative;
+}

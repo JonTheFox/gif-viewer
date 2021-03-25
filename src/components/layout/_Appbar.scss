@@ -1,0 +1,113 @@
+.MuiDrawer-modal .appbar--drawer {
+	.long-text {
+		span.MuiTypography-root {
+			font-size: 0.9rem;
+		}
+	}
+	// .menu-item--song-lyrics {
+	.menu-item--sentence-types,
+	.menu-item--present-simple-verb-forms,
+	.menu-item--past-tense-verb-forms {
+		.menu-item--icon {
+			transform: rotateZ(180deg);
+		}
+	}
+}
+
+.appbar--drawer--bar {
+	width: 100%;
+}
+
+#root .appbar-container .appbar,
+#root .appbar-container .appbar--toolbar,
+#root .appbar--drawer,
+.appbar--drawer .appbar--drawer--bar,
+.appbar--nav {
+	height: var(--appbar-height, 40px);
+	min-height: var(--appbar-height, 40px);
+
+	.menu-item--basic svg {
+		fill: var(--black);
+		padding: calc(0.25 * var(--spacing));
+	}
+}
+
+.appBarText {
+	flexgrow: 1;
+}
+
+.appbar--drawer .appbar--drawer--bar {
+	display: flex;
+	justify-content: flex-start;
+	align-item: center;
+	width: 100%;
+	.menu-close-btn {
+		margin: auto;
+		margin-left: calc(2 * var(--spacing));
+	}
+}
+
+.appbar--drawer {
+	min-width: var(--drawer-width, 200px);
+	flex-shrink: 0;
+	font-size: 1.25rem;
+}
+
+#root .appbar {
+	.MuiAutocomplete-inputRoot .MuiAutocomplete-input {
+		padding-left: calc(var(--spacing) * 5);
+	}
+	.MuiAutocomplete-inputRoot {
+		// height: calc(0.8 * var(--appbar-height));
+		input {
+			// margin-bottom: calc(0.2 * var(--appbar-height));
+			margin: auto;
+		}
+	}
+	.search {
+		height: calc(100% - 2 * var(--spacing));
+		margin: 0 var(--spacing);
+
+		.auto-complete,
+		.search-icon,
+		.MuiFormControl-root,
+		.MuiInputBase-root {
+			height: 100%;
+		}
+
+		.search-icon {
+			color: var(--canvas);
+		}
+
+		.MuiFormControl-root .MuiInputBase-input {
+			padding: 0;
+			padding-left: calc(6 * var(--spacing));
+			margin: auto;
+		}
+	}
+}
+
+#root .phone .appbar-container .search {
+	.MuiInputBase-root.MuiOutlinedInput-root.MuiAutocomplete-inputRoot
+		.MuiInputBase-formControl {
+		padding: 0;
+		.MuiFormControl-root.MuiTextField-root {
+			padding: 0;
+			padding-left: calc(6 * var(--spacing));
+			margin: auto;
+		}
+		// padding-left: calc(4 * var(--spacing));
+		// margin: auto;
+	}
+}
+
+#root
+	.appbar-container.unselectable
+	.search.makeStyles-search-3
+	.MuiFormControl-root.MuiTextField-root
+	> div {
+	padding: 0;
+}
+#root .appbar-container {
+	height: 0;
+}
