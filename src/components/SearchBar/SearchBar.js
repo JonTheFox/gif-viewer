@@ -22,7 +22,7 @@ const SearchBar = (props) => {
 		<div className="search-bar">
 			<TextField
 				className="search"
-				label="Search items..."
+				label="Search GIF..."
 				type="search"
 				onChange={handleOnChange}
 			/>

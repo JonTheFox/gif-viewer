@@ -3,10 +3,14 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import GlowingLoader from "./components/GlowingLoader/GlowingLoader.jsx";
 
-const LayzShoppingListPage = lazy(() =>
-	import(
-		/* webpackChunkName: "ShoppingList" */ "./components/ShoppingList/ShoppingListPage.js"
-	)
+const LazyMain = lazy(() =>
+	import(/* webpackChunkName: "LazyMain" */ "./pages/Main/Main.js")
+);
+const LazyLogin = lazy(() =>
+	import(/* webpackChunkName: "LazyLogin" */ "./pages/Login/Login.jsx")
+);
+const LazySignup = lazy(() =>
+	import(/* webpackChunkName: "LazySignup" */ "./pages/Signup/Signup.js")
 );
 
 const baseRoute = "/";
@@ -18,10 +22,16 @@ const AppRoutes = (props) => {
 	return (
 		<Suspense fallback={<GlowingLoader />}>
 			<Switch location={location}>
-				<Route path={`${baseRoute}`}>
-					<LayzShoppingListPage route={route} />
+				<Route path={`${baseRoute}main`}>
+					<LazyMain route={route} />
 				</Route>
-				<Redirect to={`${baseRoute} client-type-select`} />
+				<Route path={`${baseRoute}login`}>
+					<LazyLogin route={route} />
+				</Route>
+				<Route path={`${baseRoute}signup`}>
+					<LazySignup route={route} />
+				</Route>
+				<Redirect to={`${baseRoute}main`} />
 			</Switch>
 		</Suspense>
 	);
