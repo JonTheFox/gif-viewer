@@ -1,13 +1,13 @@
 import React from "react";
 
 import SearchBar from "../../components/SearchBar/SearchBar.js";
-import GifPlayer from "../../components/GifPlayer/GifPlayer.js";
+import GifManager from "../../components/GifManager/GifManager.js";
 
 const MainPage = (props) => {
 	return (
 		<div className="main--page" style={{ overflow: "auto" }}>
 			<SearchBar />
-			<GifPlayer />
+			<GifManager />
 		</div>
 	);
 };
