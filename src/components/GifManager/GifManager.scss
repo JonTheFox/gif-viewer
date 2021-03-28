@@ -1,13 +1,20 @@
-.gif-viewer {
+.gif-grid {
 	padding: calc(1 * var(--spacing));
-}
 
-.gif_player {
+	.MuiGrid-item {
+		display: flex;
+	}
 	display: flex;
-	padding: calc(var(--spacing) * 0.5);
-	// display: inline-flex;
-	img {
+	.gif_player {
+		display: flex;
+		padding: calc(var(--spacing) * 0.5);
+		display: inline-flex;
 		margin: auto;
-		border-radius: 8px;
+		img {
+			margin: auto;
+			border-radius: 8px;
+			max-width: calc(100 * var(--vw) - 2 * var(--spacing));
+			margin: auto;
+		}
 	}
 }
