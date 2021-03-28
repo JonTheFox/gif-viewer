@@ -8,12 +8,14 @@ import React, {
 
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import { makeStyles } from "@material-ui/core/styles";
-
-import { AppContext } from "../../contexts/AppContext.jsx";
-
-import capitalizeFirstLetter from "../../lib/capitalizeFirstLetter.js";
+import userState from "../../store/UserState.js";
+import useLogg from "../../hooks/useLogg.jsx";
+import { AppContext } from "../../store/AppContext.js";
 
 const useStyles = makeStyles((theme) => ({
 	button: {
@@ -25,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "flex-end",
 	},
 }));
+
+const label = "Form";
 
 export default function Form(props) {
 	const classes = useStyles();
@@ -39,7 +43,15 @@ export default function Form(props) {
 		nextBtnText = "",
 	} = props;
 
+	const [appUtils] = useContext(AppContext);
+	const { logg, loggError } = useLogg({ label });
+	const { capitalizeFirstLetter } = appUtils;
+
 	const [isFormValid, setIsFormValid] = useState(false);
+
+	const [isNextBtnDisabled, setIsNextBtnDisabled] = useState(true);
+
+	// const setUser = useSetRecoilState(userState);
 
 	const getAllData = () => {
 		const allData = {};
@@ -65,6 +77,8 @@ export default function Form(props) {
 	const validateFormData = () => {
 		let isFormValid = true; //a missing or invalid required field will change this to false
 
+		// const data = getAllData();
+
 		Object.values(fields).map((formField) => {
 			const { name, required } = formField;
 
@@ -84,9 +98,11 @@ export default function Form(props) {
 				return false;
 			}
 
-			//there are no validation rules -  so anything passes
+			//no validation rules... so anything passes
 			return true;
 		});
+
+		logg("isFormValid: ", isFormValid);
 
 		return isFormValid;
 	};
@@ -97,6 +113,7 @@ export default function Form(props) {
 	};
 
 	const handleChange = (value) => {
+		logg(value);
 		setIsFormValid(validateFormData());
 	};
 	refs.current.handleChange = handleChange;

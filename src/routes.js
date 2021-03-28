@@ -12,6 +12,9 @@ const LazyLogin = lazy(() =>
 const LazySignup = lazy(() =>
 	import(/* webpackChunkName: "LazySignup" */ "./pages/Signup/Signup.js")
 );
+const LazyHistory = lazy(() =>
+	import(/* webpackChunkName: "LazyHistory" */ "./pages/History/History.js")
+);
 
 const baseRoute = "/";
 
@@ -22,14 +25,18 @@ const AppRoutes = (props) => {
 	return (
 		<Suspense fallback={<GlowingLoader />}>
 			<Switch location={location}>
-				<Route path={`${baseRoute}main`}>
-					<LazyMain route={route} />
+				<Route path={`${baseRoute}signup`}>
+					<LazySignup route={route} />
 				</Route>
 				<Route path={`${baseRoute}login`}>
 					<LazyLogin route={route} />
 				</Route>
-				<Route path={`${baseRoute}signup`}>
-					<LazySignup route={route} />
+
+				<Route path={`${baseRoute}main`}>
+					<LazyMain route={route} />
+				</Route>
+				<Route path={`${baseRoute}history`}>
+					<LazyHistory route={route} />
 				</Route>
 				<Redirect to={`${baseRoute}main`} />
 			</Switch>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AppContext } from "../../contexts/AppContext.jsx";
+import { AppContext } from "../../store/AppContext.jsx";
 
 const label = "useLocalstorage";
 let logg;

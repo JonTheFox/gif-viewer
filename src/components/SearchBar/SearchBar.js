@@ -5,7 +5,6 @@ import SearchState from "../../store/SearchState.js";
 import { useSetRecoilState } from "recoil";
 
 import TextField from "@material-ui/core/TextField";
-import Form from "../Form/Form.js";
 
 const SearchBar = (props) => {
 	const setSearchTerm = useSetRecoilState(SearchState);
