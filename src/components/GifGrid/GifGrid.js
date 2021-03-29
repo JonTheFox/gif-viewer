@@ -23,14 +23,14 @@ const GifManager = (props) => {
   const [appUtils] = useContext(AppContext);
   const { device } = useContext(DeviceContext);
   const refs = useRef({});
-  const [page, setPage] = useState(0);
+  const [page] = useState(0);
   const { logg, loggError } = useLogg({ label: "GifManager" });
   const { request } = appUtils;
   const [items, setItems] = useRecoilState(ItemsState);
   const searchQuery = useRecoilValue(SearchState);
 
   const fetchGifs = useCallback(async (ev, _page) => {
-    const result = await request("GET", "api.giphy.com/v1/gifs/search", {
+    const result = await request("GET", GIPHY_SEARCH_ENPOINTS.search, {
       q: refs.current.searchQuery,
       api_key: GIPHY_API_KEY,
       limit: 10,
@@ -61,6 +61,7 @@ const GifManager = (props) => {
         };
       });
       setItems(leanItems);
+      return leanItems;
     }
   }, []);
 
@@ -90,44 +91,42 @@ const GifManager = (props) => {
             original,
           } = gif;
 
-          let gifObj;
+          let gifUrl;
           switch (device) {
             case "phone":
-              gifObj =
-                downsized_small ||
-                downsized_medium ||
-                downsized_large ||
+              gifUrl =
+                downsized_small?.url ||
+                downsized_medium?.url ||
+                downsized_large?.url ||
                 original;
               break;
             case "tablet":
-              gifObj =
-                downsized_medium ||
-                downsized_large ||
-                original ||
-                downsized_small;
+              gifUrl =
+                downsized_medium?.url ||
+                downsized_large?.url ||
+                original?.url ||
+                downsized_small?.url;
               break;
             case "largeScreen":
-              gifObj =
-                downsized_large ||
-                original ||
-                downsized_medium ||
-                downsized_small ||
+              gifUrl =
+                downsized_large?.url ||
+                original?.url ||
+                downsized_medium?.url ||
+                downsized_small?.url ||
                 original;
               break;
             case "xlScreen":
-              gifObj = original;
-              gifObj =
-                original ||
-                downsized_large ||
-                downsized_medium ||
-                downsized_small;
+              gifUrl = original;
+              gifUrl =
+                original?.url ||
+                downsized_large?.url ||
+                downsized_medium?.url ||
+                downsized_small?.url;
               break;
             default:
-              gifObj = downsized_large;
+              gifUrl = downsized_large?.url;
               break;
           }
-
-          const gifUrl = gifObj?.url;
 
           return (
             <Grid item xs key={id}>

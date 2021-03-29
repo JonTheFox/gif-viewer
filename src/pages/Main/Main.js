@@ -7,9 +7,13 @@ import "./Main.scss";
 
 const MainPage = (props) => {
 	const [page, setPage] = useState(0);
-	const handlePageChange = useCallback((ev, _page) => {
-		setPage(_page);
-	}, []);
+	const handlePageChange = useCallback(
+		(ev, _page) => {
+			setPage(_page);
+			debugger;
+		},
+		[setPage]
+	);
 
 	return (
 		<div className="main--page" style={{ overflow: "auto" }}>

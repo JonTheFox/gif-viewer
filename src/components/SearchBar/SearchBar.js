@@ -32,11 +32,11 @@ const SearchBar = (props) => {
 				return item?.trim()?.toLowerCase();
 			});
 
-			if (!searchHistory?.includes(inputText?.trim()?.toLowerCase())) {
+			if (!lowerCaseHistory?.includes(inputText?.trim()?.toLowerCase())) {
 				//new unique search term. Add it to the history state
 				setSearchHistory((prev) => {
-					const res = [inputText, ...prev];
-					return res;
+					const updatedState = [inputText, ...prev];
+					return updatedState;
 				});
 			}
 			setSearchQuery(inputText);
