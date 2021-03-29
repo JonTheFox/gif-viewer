@@ -3,8 +3,7 @@
 Live [demo](https://gif-viewer-342c6.web.app/)
 
 ## Running Locally
-
-In the project directory, you can run:
+Please note that you must run localhost from SSL.
 
 ### `git clone https://github.com/JonTheFox/gif-viewer.git`
 ### `npm install`
