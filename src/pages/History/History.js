@@ -14,17 +14,6 @@ const History = (props) => {
 		SearchHistoryState
 	);
 
-	debugger;
-
-	// useEffect(() => {
-	// 	const rawString = window.localStorage.getItem(
-	// 		localStorageKeys.searchHistory
-	// 	);
-	// 	const _searchHistory = JSON.parse(rawString);
-	// 	debugger;
-	// 	setSearchHistory(_searchHistory);
-	// }, []);
-
 	useEffect(() => {
 		window.localStorage.setItem(
 			localStorageKeys.searchHistory,
@@ -34,7 +23,9 @@ const History = (props) => {
 
 	return (
 		<div className="history--page" style={{ overflow: "auto" }}>
-			<h1 style={{ fontSize: "1.5rem" }}>Recent searches</h1>
+			<h1 style={{ fontSize: "1.5rem", paddingLeft: "var(--spacing)" }}>
+				Recent searches
+			</h1>
 
 			<List component="nav" aria-label="history search terms">
 				{searchHistory?.map((query, i) => {

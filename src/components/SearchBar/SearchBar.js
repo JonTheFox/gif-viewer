@@ -37,8 +37,15 @@ const SearchBar = (props) => {
 			if (!lowerCaseHistory?.includes(inputText?.trim()?.toLowerCase())) {
 				//new unique search term. Add it to the history state
 				setSearchHistory((prev) => {
-					const updatedState = [inputText, ...prev];
-					return updatedState;
+					const prevCopy = [...prev];
+
+					if (prevCopy.length >= 10) {
+						//remove the last item (i.e. the oldest entry)
+						const itemsSansLastOne = prevCopy.slice(0, 10);
+						debugger;
+						return [inputText, ...itemsSansLastOne];
+					}
+					return [inputText, ...prevCopy];
 				});
 			}
 			setPage(1);
