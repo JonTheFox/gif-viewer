@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "build",
+    "public": "npm run-script",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
