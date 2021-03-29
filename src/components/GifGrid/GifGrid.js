@@ -12,7 +12,7 @@ import SearchState from "../../store/SearchState.js";
 import "./GifGrid.scss";
 import GifPlayer from "react-gif-player";
 import { useRecoilState, useRecoilValue } from "recoil";
-import MOCK_ITEMS from "../../mock data/gifs.js";
+//import MOCK_ITEMS from "../../mock data/gifs.js";
 import GIPHY_SEARCH_ENPOINTS from "./giphyEndpoints";
 import Grid from "@material-ui/core/Grid";
 import useLogg from "../../hooks/useLogg.jsx";
@@ -22,6 +22,7 @@ const GIPHY_API_KEY = "VnJMxXakNWjXkk26CsXNto4pyWbQAVV2";
 const GifManager = (props) => {
   const [appUtils] = useContext(AppContext);
   const { device } = useContext(DeviceContext);
+  const refs = useRef({});
   const [page, setPage] = useState(0);
   const { logg, loggError } = useLogg({ label: "GifManager" });
   const { request } = appUtils;
@@ -41,17 +42,17 @@ const GifManager = (props) => {
 
   const fetchGifs = useCallback(async (ev, _page) => {
     const result = await request("GET", GIPHY_SEARCH_ENPOINTS.search, {
-      q: searchQuery,
+      q: refs.current.searchQuery,
       api_key: GIPHY_API_KEY,
       limit: 10,
-      offset: page,
+      offset: refs.current.page,
     });
     const { error, data } = result;
 
     //for debugging
-    const leanItems = MOCK_ITEMS?.map(mapItemToLeanObj);
-    setItems(leanItems);
-    return;
+    // const leanItems = MOCK_ITEMS?.map(mapItemToLeanObj);
+    // setItems(leanItems);
+    // return;
 
     if (error) {
       loggError(error);
@@ -60,15 +61,16 @@ const GifManager = (props) => {
       const leanItems = data?.map(mapItemToLeanObj);
       setItems(leanItems);
     }
-    logg("data: ", data);
   }, []);
 
   useEffect(() => {
     fetchGifs();
+    refs.current.page = page;
   }, [page]);
 
   useEffect(() => {
     fetchGifs();
+    refs.current.searchQuery = searchQuery;
   }, [searchQuery, fetchGifs]);
 
   return (
