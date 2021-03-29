@@ -14,6 +14,7 @@ import View from "../../components/layout/View.jsx";
 import { useSetRecoilState } from "recoil";
 import userState from "../../store/UserState.js";
 import navigateTo from "../../lib/navigateTo.js";
+import localStorageKeys from "../../constants/localstorageKeys.js";
 
 import Copyright from "../../components/Copyright/Copyright.js";
 
@@ -60,7 +61,14 @@ export default function SignIn(props) {
 					email,
 					password,
 				};
-				// appState.setUser(loggedInUser, rememberMe);
+
+				//setUserInLocalStorage
+
+				window.localStorage.setItem(
+					localStorageKeys.user,
+					JSON.stringify(loggedInUser)
+				);
+
 				setUser(loggedInUser);
 				console.log(`logged in user ${email}`);
 				animationFrame = window.requestAnimationFrame(() => {

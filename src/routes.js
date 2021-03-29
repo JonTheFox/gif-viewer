@@ -1,5 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import UserState from "./store/UserState.js";
+import { useRecoilValue } from "recoil";
 
 import GlowingLoader from "./components/GlowingLoader/GlowingLoader.jsx";
 
@@ -21,6 +23,24 @@ const baseRoute = "/";
 const AppRoutes = (props) => {
 	const { route } = props;
 	const { location } = route;
+	const user = useRecoilValue(UserState);
+
+	debugger;
+
+	if (!user) {
+		return (
+			<Suspense fallback={<GlowingLoader />}>
+				<Route path={`${baseRoute}signup`}>
+					<LazySignup route={route} />
+				</Route>
+				<Route path={`${baseRoute}login`}>
+					<LazyLogin route={route} />
+				</Route>
+
+				<Redirect to={`${baseRoute}login`} />
+			</Suspense>
+		);
+	}
 
 	return (
 		<Suspense fallback={<GlowingLoader />}>

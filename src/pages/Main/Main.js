@@ -81,7 +81,6 @@ const MainPage = (props) => {
 	const handlePageChange = useCallback(
 		(ev, _page) => {
 			setPage(_page);
-			debugger;
 		},
 		[setPage]
 	);
