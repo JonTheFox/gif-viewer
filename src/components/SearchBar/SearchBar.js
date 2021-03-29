@@ -1,12 +1,14 @@
 import React, { useCallback, useRef, useEffect } from "react";
 import SearchState from "../../store/SearchState.js";
 import SearchHistoryState from "../../store/SearchHistoryState.js";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilState } from "recoil";
 import TextField from "@material-ui/core/TextField";
 
 const SearchBar = (props) => {
 	const setSearchQuery = useSetRecoilState(SearchState);
-	const searchHistory = useRecoilValue(SearchHistoryState);
+	const [searchHistory, setSearchHistory] = useRecoilState(
+		SearchHistoryState
+	);
 	const refs = useRef({ inputText: {}, searchHistory });
 
 	useEffect(() => {
@@ -21,7 +23,6 @@ const SearchBar = (props) => {
 		[refs]
 	);
 
-	//will get populated by Form
 	const handleSubmit = useCallback(
 		(ev) => {
 			ev.preventDefault();
@@ -30,12 +31,17 @@ const SearchBar = (props) => {
 			const lowerCaseHistory = searchHistory?.map((item) => {
 				return item?.trim()?.toLowerCase();
 			});
-			if (searchHistory?.includes(inputText?.trim()?.toLowerCase())) {
-				setSearchQuery(inputText);
+
+			if (!searchHistory?.includes(inputText?.trim()?.toLowerCase())) {
+				//new unique search term. Add it to the history state
+				setSearchHistory((prev) => {
+					return { ...prev, inputText };
+				});
 			}
+			setSearchQuery(inputText);
 		},
 		[setSearchQuery]
-	); //pass an array of dependencies (you can pass an empty array)
+	);
 
 	return (
 		<div className="search" style={{ padding: "var(--spacing)" }}>
