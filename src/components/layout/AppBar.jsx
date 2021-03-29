@@ -215,7 +215,6 @@ const ResponsiveDrawer = (props) => {
   const mediaContext = useContext(DeviceContext);
   const [visible, setVisible] = useState(true);
   const classes = useStyles(mediaContext);
-  debugger;
   const res = useContext(AppContext);
   const [appUtils, appState] = res;
   const {

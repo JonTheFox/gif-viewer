@@ -1,9 +1,9 @@
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 const paletteTheme = {
-	primary: { main: "#f72d2d" }, // washed up purple
-	secondary: { main: "rgb(255, 255, 170)" }, //light blue
-	canvasColor: "#e0e0e0", // silver
+	primary: { main: "#f72d2d" }, // red
+	secondary: { main: "rgb(224, 224, 224)" }, //gray
+	canvasColor: "rgb(250, 250, 250)", // silver
 	//canvasColor: "rgba(255, 255, 255, 0.87)" //white
 };
 
