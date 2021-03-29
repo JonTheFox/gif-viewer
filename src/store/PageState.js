@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 const PageState = atom({
 	key: "PageState",
-	default: 0,
+	default: 1,
 });
 
 export default PageState;

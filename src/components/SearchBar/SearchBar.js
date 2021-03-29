@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useEffect } from "react";
 import SearchState from "../../store/SearchState.js";
 import SearchHistoryState from "../../store/SearchHistoryState.js";
+import PageState from "../../store/PageState.js";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import TextField from "@material-ui/core/TextField";
 
@@ -9,6 +10,7 @@ const SearchBar = (props) => {
 	const [searchHistory, setSearchHistory] = useRecoilState(
 		SearchHistoryState
 	);
+	const setPage = useSetRecoilState(PageState);
 	const refs = useRef({ inputText: {}, searchHistory });
 
 	useEffect(() => {
@@ -39,7 +41,10 @@ const SearchBar = (props) => {
 					return updatedState;
 				});
 			}
-			setSearchQuery(inputText);
+			setPage(1);
+			setTimeout(() => {
+				setSearchQuery(inputText);
+			}, 50);
 		},
 		[setSearchQuery]
 	);

@@ -32,14 +32,12 @@ const MainPage = (props) => {
 		const result = await request("GET", GIPHY_ENDPOINTS.search, {
 			q: refs.current.searchQuery,
 			api_key: GIPHY_API_KEY,
-			limit: 10,
-			offset: refs.current.page,
+			limit: 50, //max possible,
 		});
 
 		const { error, data } = result;
-
 		if (error) {
-			// return loggError(error);
+			return;
 		}
 		if (data) {
 			//remove unnecessary data

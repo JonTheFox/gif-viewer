@@ -9,9 +9,10 @@ import { AppContext } from "../../store/AppContext.js";
 import { DeviceContext } from "../../store/DeviceContext.js";
 import ItemsState from "../../store/ItemsState.js";
 import SearchState from "../../store/SearchState.js";
+import DisplayedItemsState from "../../store/DisplayedItems.selector.js";
 import "./GifGrid.scss";
 import GifPlayer from "react-gif-player";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import MOCK_ITEMS from "../../mock data/gifs.js";
 import GIPHY_SEARCH_ENPOINTS from "./giphyEndpoints";
 import Grid from "@material-ui/core/Grid";
@@ -24,7 +25,8 @@ const GifGrid = (props) => {
   // const [page] = useState(0);
   const { logg, loggError } = useLogg({ label: "GifGrid" });
   const { request } = appUtils;
-  const [items, setItems] = useRecoilState(ItemsState);
+  const setItems = useSetRecoilState(ItemsState);
+  const displayedItems = useRecoilValue(DisplayedItemsState);
   const searchQuery = useRecoilValue(SearchState);
 
   // useEffect(() => {
@@ -33,14 +35,14 @@ const GifGrid = (props) => {
   //   refs.current.page = page;
   // }, [page]);
 
-  if (!items || !items.length) {
+  if (!displayedItems || !displayedItems.length) {
     return <div className="no-gifs">No GIFs found. Try another search.</div>;
   }
 
   return (
     <div classsName="gif-grid--container">
       <Grid container spacing={3} className={"gif-grid"}>
-        {items?.map((gif, i) => {
+        {displayedItems?.map((gif, i) => {
           const {
             id,
             downsized_small,
