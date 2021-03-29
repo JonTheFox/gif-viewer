@@ -36,6 +36,7 @@ const GifManager = (props) => {
       limit: 10,
       offset: refs.current.page,
     });
+    debugger;
     const { error, data } = result;
 
     //for debugging
