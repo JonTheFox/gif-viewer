@@ -9,24 +9,24 @@ import { AppContext } from "../../store/AppContext.js";
 import ItemsState from "../../store/ItemsState.js";
 import SearchState from "../../store/SearchState.js";
 import PageState from "../../store/PageState.js";
+import SearchHistoryState from "../../store/SearchHistoryState.js";
 import useLogg from "../../lib/logg.js";
 import SearchBar from "../../components/SearchBar/SearchBar.js";
 import GifGrid from "../../components/GifGrid/GifGrid.js";
 import Pagination from "@material-ui/lab/Pagination";
 import "./Main.scss";
 import { GIPHY_ENDPOINTS, GIPHY_API_KEY } from "./giphy.js";
+import localStorageKeys from "../../constants/localstorageKeys.js";
 import { useRecoilValue, useRecoilState } from "recoil";
 
 const MainPage = (props) => {
 	const [page, setPage] = useRecoilState(PageState);
-	const refs = useRef({});
-	// const { logg, loggError } = useLogg({ label: "MainPage" });
-
 	const [items, setItems] = useRecoilState(ItemsState);
 	const searchQuery = useRecoilValue(SearchState);
-
+	const searchHistory = useRecoilValue(SearchHistoryState);
 	const [appUtils] = useContext(AppContext);
 	const { request } = appUtils;
+	const refs = useRef({});
 
 	const fetchGifs = useCallback(async (ev, _page) => {
 		const result = await request("GET", GIPHY_ENDPOINTS.search, {
@@ -102,7 +102,6 @@ const MainPage = (props) => {
 					onChange={handlePageChange}
 				/>
 			</div>
-
 			<GifGrid />
 		</div>
 	);

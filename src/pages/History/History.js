@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SearchHistoryState from "../../store/SearchHistoryState.js";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
+import localStorageKeys from "../../constants/localstorageKeys.js";
+
 const History = (props) => {
-	const searchHistory = useRecoilValue(SearchHistoryState);
+	const [searchHistory, setSearchHistory] = useRecoilState(
+		SearchHistoryState
+	);
+
+	debugger;
+
+	// useEffect(() => {
+	// 	const rawString = window.localStorage.getItem(
+	// 		localStorageKeys.searchHistory
+	// 	);
+	// 	const _searchHistory = JSON.parse(rawString);
+	// 	debugger;
+	// 	setSearchHistory(_searchHistory);
+	// }, []);
+
+	useEffect(() => {
+		window.localStorage.setItem(
+			localStorageKeys.searchHistory,
+			JSON.stringify(searchHistory)
+		);
+	}, [searchHistory]);
+
 	return (
 		<div className="history--page" style={{ overflow: "auto" }}>
 			<h1 style={{ fontSize: "1.5rem" }}>Recent searches</h1>
