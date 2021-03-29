@@ -1,20 +1,22 @@
-.gif-grid {
-	padding: calc(1 * var(--spacing));
+.gif-grid--container {
+	.gif-grid {
+		padding: calc(1 * var(--spacing));
 
-	.MuiGrid-item {
+		.MuiGrid-item {
+			display: flex;
+		}
 		display: flex;
-	}
-	display: flex;
-	.gif_player {
-		display: flex;
-		padding: calc(var(--spacing) * 0.5);
-		display: inline-flex;
-		margin: auto;
-		img {
+		.gif_player {
+			display: flex;
+			padding: calc(var(--spacing) * 0.5);
+			display: inline-flex;
 			margin: auto;
-			border-radius: 8px;
-			max-width: calc(100 * var(--vw) - 2 * var(--spacing));
-			margin: auto;
+			img {
+				margin: auto;
+				border-radius: 8px;
+				max-width: calc(100 * var(--vw) - 2 * var(--spacing));
+				margin: auto;
+			}
 		}
 	}
 }

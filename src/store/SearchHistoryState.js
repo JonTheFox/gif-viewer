@@ -1,9 +1,9 @@
 import { atom } from "recoil";
-import searchTerms from "../mock data/searchTerms.js";
+// import searchTerms from "../mock data/searchTerms.js";
 
 const SearchHistory = atom({
 	key: "SearchHistory",
-	default: searchTerms,
+	default: [],
 });
 
 export default SearchHistory;

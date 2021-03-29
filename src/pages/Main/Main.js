@@ -3,6 +3,7 @@ import React, { useCallback, useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar.js";
 import GifGrid from "../../components/GifGrid/GifGrid.js";
 import Pagination from "@material-ui/lab/Pagination";
+import "./Main.scss";
 
 const MainPage = (props) => {
 	const [page, setPage] = useState(0);

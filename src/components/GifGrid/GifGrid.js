@@ -12,7 +12,7 @@ import SearchState from "../../store/SearchState.js";
 import "./GifGrid.scss";
 import GifPlayer from "react-gif-player";
 import { useRecoilState, useRecoilValue } from "recoil";
-//import MOCK_ITEMS from "../../mock data/gifs.js";
+import MOCK_ITEMS from "../../mock data/gifs.js";
 import GIPHY_SEARCH_ENPOINTS from "./giphyEndpoints";
 import Grid from "@material-ui/core/Grid";
 import useLogg from "../../hooks/useLogg.jsx";
@@ -29,17 +29,6 @@ const GifManager = (props) => {
   const [items, setItems] = useRecoilState(ItemsState);
   const searchQuery = useRecoilValue(SearchState);
 
-  const mapItemToLeanObj = (originalItem, i) => {
-    const { id, images } = originalItem;
-    const {
-      downsized_small,
-      downsized_medium,
-      downsized_large,
-      original,
-    } = images;
-    return { id, downsized_small, downsized_medium, downsized_large, original };
-  };
-
   const fetchGifs = useCallback(async (ev, _page) => {
     const result = await request("GET", GIPHY_SEARCH_ENPOINTS.search, {
       q: refs.current.searchQuery,
@@ -55,10 +44,26 @@ const GifManager = (props) => {
     // return;
 
     if (error) {
-      loggError(error);
+      return loggError(error);
     }
     if (data) {
-      const leanItems = data?.map(mapItemToLeanObj);
+      //remove unnecessary data
+      const leanItems = data?.map((originalItem, i) => {
+        const { id, images } = originalItem;
+        const {
+          downsized_small,
+          downsized_medium,
+          downsized_large,
+          original,
+        } = images;
+        return {
+          id,
+          downsized_small,
+          downsized_medium,
+          downsized_large,
+          original,
+        };
+      });
       setItems(leanItems);
     }
   }, []);
@@ -73,8 +78,12 @@ const GifManager = (props) => {
     refs.current.searchQuery = searchQuery;
   }, [searchQuery, fetchGifs]);
 
+  if (!items || !items.length) {
+    return <div className="no-gifs">No GIFs found. Try another search.</div>;
+  }
+
   return (
-    <React.Fragment>
+    <div classsName="gif-grid--container">
       <Grid container spacing={3} className={"gif-grid"}>
         {items?.map((gif, i) => {
           const {
@@ -131,7 +140,7 @@ const GifManager = (props) => {
           );
         })}
       </Grid>
-    </React.Fragment>
+    </div>
   );
 };
 
