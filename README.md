@@ -6,6 +6,6 @@ Live [demo](https://gif-viewer-342c6.web.app/)
 
 In the project directory, you can run:
 
-### `git clone `
+### `git clone https://github.com/JonTheFox/gif-viewer.git`
 ### `npm install`
 ### `npm run start`
