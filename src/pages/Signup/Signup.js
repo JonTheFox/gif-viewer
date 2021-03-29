@@ -369,7 +369,6 @@ export default function Signup(props) {
 	const handleInputChange = useCallback(
 		(ev, { fieldName, useInnerText = false }) => {
 			const value = ev.target[useInnerText ? "innerText" : "value"];
-			if (!value) debugger;
 			refs.current[fieldName] = value;
 			refs.current.handleChange(value);
 		},
@@ -543,72 +542,6 @@ export default function Signup(props) {
 							);
 						}
 
-						if (type === "autoComplete") {
-							return (
-								<Grid item xs={10} sm={10} key={label}>
-									<Autocomplete
-										className={clsx(
-											classes.autoComplete,
-											"auto-complete"
-										)}
-										classes={{
-											root: classes.inputRoot,
-										}}
-										options={options}
-										//groupBy={appState.searchables.groupBy}
-										//defaultValue={appState.searchables.list[0]}
-										getOptionsLabel={(option) =>
-											option.label
-										}
-										label="Country"
-										aria-label="search"
-										autoComplete={true}
-										placeholder={
-											"Please select your country"
-										}
-										autoHighlight={false}
-										autoSelect={false}
-										clearOnEscape={false}
-										disableClearable={false}
-										disableCloseOnSelect={false}
-										disabled={false}
-										loading={false}
-										loadingText={"Working.."}
-										noOptionsText={
-											"Imagine there's no countries.."
-										}
-										renderInput={(params) => (
-											<React.Fragment>
-												<div
-													className={clsx(
-														"search-icon",
-														classes.searchIcon
-													)}
-												>
-													<SearchIcon />
-												</div>
-
-												<TextField
-													{...params}
-													// label="search-term"
-													variant="standard"
-													label="Country"
-												/>
-											</React.Fragment>
-										)}
-										onChange={(ev) => {
-											const value = ev.target.innerText;
-
-											handleInputChange(ev, {
-												fieldName: name,
-												useInnerText: true,
-											});
-										}}
-									></Autocomplete>
-								</Grid>
-							);
-						}
-
 						const isNarrowField = [
 							"first_name",
 							"middle_name",
@@ -626,6 +559,10 @@ export default function Signup(props) {
 									InputLabelProps={{
 										shrink: true,
 									}}
+									helperText={
+										type === "password" &&
+										"Password must be at least 8 characters long and must include at least 1 uppercase letter, lowercase letter and a digit."
+									}
 									select={type === "select"}
 									type={type}
 									required={required}
