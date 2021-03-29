@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import View from "../../components/layout/View.jsx";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import userState from "../../store/UserState.js";
 import navigateTo from "../../lib/navigateTo.js";
 import localStorageKeys from "../../constants/localstorageKeys.js";
@@ -45,7 +45,7 @@ export default function SignIn(props) {
 	const { history } = route;
 	const classes = useStyles();
 
-	const setUser = useSetRecoilState(userState);
+	const [user, setUser] = useRecoilState(userState);
 
 	const submitForm = useCallback(
 		async (ev) => {
@@ -71,19 +71,19 @@ export default function SignIn(props) {
 
 				setUser(loggedInUser);
 				console.log(`logged in user ${email}`);
-				animationFrame = window.requestAnimationFrame(() => {
-					navigateTo("/main", history);
-				});
+				// animationFrame = window.requestAnimationFrame(() => {
+				// 	navigateTo("/main", history);
+				// });
 			} catch (err) {}
 		},
 		[history, navigateTo, setUser]
 	);
 
-	useEffect(() => {
-		return () => {
-			cancelAnimationFrame(animationFrame);
-		};
-	}, []);
+	if (user) {
+		animationFrame = window.requestAnimationFrame(() => {
+			navigateTo("/main", history);
+		});
+	}
 
 	return (
 		<View animate={false} className="login-page">

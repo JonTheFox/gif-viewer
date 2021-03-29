@@ -156,6 +156,7 @@ const ACCOUNT_FIELDS = [
 		label: "Password",
 		validate: validatePassword,
 		required: true,
+		type: "password",
 	},
 ];
 
@@ -476,6 +477,72 @@ export default function Signup(props) {
 								</Grid>
 							);
 						}
+						if (type === "autoComplete") {
+							return (
+								<Grid item xs={10} sm={10} key={label}>
+									<Autocomplete
+										className={clsx(
+											classes.autoComplete,
+											"auto-complete"
+										)}
+										classes={{
+											root: classes.inputRoot,
+										}}
+										options={options}
+										//groupBy={appState.searchables.groupBy}
+										//defaultValue={appState.searchables.list[0]}
+										getOptionsLabel={(option) =>
+											option.label
+										}
+										label="Country"
+										aria-label="search"
+										autoComplete={true}
+										placeholder={
+											"Please select your country"
+										}
+										autoHighlight={false}
+										autoSelect={false}
+										clearOnEscape={false}
+										disableClearable={false}
+										disableCloseOnSelect={false}
+										disabled={false}
+										loading={false}
+										loadingText={"Working.."}
+										noOptionsText={
+											"Imagine there's no countries.."
+										}
+										renderInput={(params) => (
+											<React.Fragment>
+												<div
+													className={clsx(
+														"search-icon",
+														classes.searchIcon
+													)}
+												>
+													<SearchIcon />
+												</div>
+
+												<TextField
+													{...params}
+													// label="search-term"
+													variant="standard"
+													label="Country"
+												/>
+											</React.Fragment>
+										)}
+										onChange={(ev) => {
+											const value = ev.target.innerText;
+
+											handleInputChange(ev, {
+												fieldName: name,
+												useInnerText: true,
+											});
+										}}
+									></Autocomplete>
+								</Grid>
+							);
+						}
+
 						if (type === "autoComplete") {
 							return (
 								<Grid item xs={10} sm={10} key={label}>

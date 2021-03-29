@@ -25,8 +25,6 @@ const AppRoutes = (props) => {
 	const { location } = route;
 	const user = useRecoilValue(UserState);
 
-	debugger;
-
 	if (!user) {
 		return (
 			<Suspense fallback={<GlowingLoader />}>
@@ -57,6 +55,9 @@ const AppRoutes = (props) => {
 				</Route>
 				<Route path={`${baseRoute}history`}>
 					<LazyHistory route={route} />
+				</Route>
+				<Route path={`${baseRoute}loading`}>
+					<GlowingLoader route={route} />
 				</Route>
 				<Redirect to={`${baseRoute}main`} />
 			</Switch>
