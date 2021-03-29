@@ -64,27 +64,6 @@
 			margin: auto;
 		}
 	}
-	.search {
-		height: calc(100% - 2 * var(--spacing));
-		margin: 0 var(--spacing);
-
-		.auto-complete,
-		.search-icon,
-		.MuiFormControl-root,
-		.MuiInputBase-root {
-			height: 100%;
-		}
-
-		.search-icon {
-			color: var(--canvas);
-		}
-
-		.MuiFormControl-root .MuiInputBase-input {
-			padding: 0;
-			padding-left: calc(6 * var(--spacing));
-			margin: auto;
-		}
-	}
 }
 
 #root .phone .appbar-container .search {

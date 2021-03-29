@@ -1,14 +1,17 @@
-import React, { useCallback, useRef } from "react";
-
+import React, { useCallback, useRef, useEffect } from "react";
 import SearchState from "../../store/SearchState.js";
-
-import { useSetRecoilState } from "recoil";
-
+import SearchHistoryState from "../../store/SearchHistoryState.js";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 import TextField from "@material-ui/core/TextField";
 
 const SearchBar = (props) => {
-	const setSearchTerm = useSetRecoilState(SearchState);
-	const refs = useRef({ inputText: {} });
+	const setSearchQuery = useSetRecoilState(SearchState);
+	const searchHistory = useRecoilValue(SearchHistoryState);
+	const refs = useRef({ inputText: {}, searchHistory });
+
+	useEffect(() => {
+		refs.current.searchHistory = searchHistory;
+	}, [searchHistory]);
 
 	const handleOnChange = useCallback(
 		(ev) => {
@@ -23,13 +26,19 @@ const SearchBar = (props) => {
 		(ev) => {
 			ev.preventDefault();
 			const inputText = refs.current.inputText;
-			setSearchTerm(inputText);
+			const { searchHistory } = refs.current;
+			const lowerCaseHistory = searchHistory?.map((item) => {
+				return item?.trim()?.toLowerCase();
+			});
+			if (searchHistory?.includes(inputText?.trim()?.toLowerCase())) {
+				setSearchQuery(inputText);
+			}
 		},
-		[setSearchTerm]
+		[setSearchQuery]
 	); //pass an array of dependencies (you can pass an empty array)
 
 	return (
-		<div className="search">
+		<div className="search" style={{ padding: "var(--spacing)" }}>
 			<form onSubmit={handleSubmit}>
 				<TextField
 					className="search"

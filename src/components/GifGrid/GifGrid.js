@@ -16,7 +16,6 @@ import MOCK_ITEMS from "../../mock data/gifs.js";
 import GIPHY_SEARCH_ENPOINTS from "./giphyEndpoints";
 import Grid from "@material-ui/core/Grid";
 import useLogg from "../../hooks/useLogg.jsx";
-import Pagination from "@material-ui/lab/Pagination";
 
 const GIPHY_API_KEY = "VnJMxXakNWjXkk26CsXNto4pyWbQAVV2";
 
@@ -71,10 +70,6 @@ const GifManager = (props) => {
   useEffect(() => {
     fetchGifs();
   }, [searchQuery, fetchGifs]);
-
-  const handlePageChange = useCallback((ev, _page) => {
-    setPage(_page);
-  }, []);
 
   return (
     <React.Fragment>
@@ -134,12 +129,6 @@ const GifManager = (props) => {
           );
         })}
       </Grid>
-      <Pagination
-        className={"pagination"}
-        count={10}
-        page={page}
-        onChange={handlePageChange}
-      />
     </React.Fragment>
   );
 };

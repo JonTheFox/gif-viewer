@@ -360,7 +360,7 @@ const ResponsiveDrawer = (props) => {
             noWrap
             onClick={() => handleLinkClick(`${match.path}${APP_ROUTE}`)}
           >
-            Weiss
+            GIF Viewer
           </Typography>
 
           {user ? (
