@@ -30,19 +30,14 @@ const GifManager = (props) => {
   const searchQuery = useRecoilValue(SearchState);
 
   const fetchGifs = useCallback(async (ev, _page) => {
-    const result = await request("GET", GIPHY_SEARCH_ENPOINTS.search, {
+    const result = await request("GET", "api.giphy.com/v1/gifs/search", {
       q: refs.current.searchQuery,
       api_key: GIPHY_API_KEY,
       limit: 10,
       offset: refs.current.page,
     });
-    debugger;
-    const { error, data } = result;
 
-    //for debugging
-    // const leanItems = MOCK_ITEMS?.map(mapItemToLeanObj);
-    // setItems(leanItems);
-    // return;
+    const { error, data } = result;
 
     if (error) {
       return loggError(error);
