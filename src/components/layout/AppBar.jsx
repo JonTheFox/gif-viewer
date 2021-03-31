@@ -45,6 +45,7 @@ import { AppContext } from "../../store/AppContext.js";
 import { DeviceContext } from "../../store/DeviceContext.js";
 import userState from "../../store/UserState.js";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import localStorageKeys from "../../constants/localstorageKeys.js";
 
 import "./_Appbar.scss";
 
@@ -267,9 +268,8 @@ const ResponsiveDrawer = (props) => {
       animationFrame = window.requestAnimationFrame(() => {
         switch (menuitem) {
           case "logout":
-            // handleLinkClick("/login");
-            // appState.setUser(null);
             setUser(null);
+            window.localStorage.setItem(localStorageKeys.user, null);
             navigateTo("/login", props.history);
             break;
         }

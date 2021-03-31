@@ -15,6 +15,7 @@ import { useRecoilState } from "recoil";
 import userState from "../../store/UserState.js";
 import navigateTo from "../../lib/navigateTo.js";
 import localStorageKeys from "../../constants/localstorageKeys.js";
+import firebase from "../../firebase/firebase.js";
 
 import Copyright from "../../components/Copyright/Copyright.js";
 
@@ -50,31 +51,51 @@ export default function SignIn(props) {
 	const submitForm = useCallback(
 		async (ev) => {
 			ev.preventDefault();
+
 			try {
 				const formData = new FormData(ev.target);
 				const email = formData.get("email");
 				const password = formData.get("password");
-				const rememberMe = formData.get("remember");
+				// const rememberMe = formData.get("remember");
+				debugger;
+				firebase
+					.auth()
+					.signInWithEmailAndPassword(email, password)
+					.then((userCredential) => {
+						// Signed in
+						const loggedInUser = {
+							email,
+							password,
+						};
 
-				//todo: replace this with an API call
-				const loggedInUser = {
-					email,
-					password,
-				};
+						debugger;
 
-				//setUserInLocalStorage
+						//setUserInLocalStorage
+						window.localStorage.setItem(
+							localStorageKeys.user,
+							JSON.stringify(loggedInUser)
+						);
 
-				window.localStorage.setItem(
-					localStorageKeys.user,
-					JSON.stringify(loggedInUser)
-				);
+						setUser(loggedInUser);
+						console.log(`logged in user ${email}`);
+					})
+					.catch((error) => {
+						debugger;
 
-				setUser(loggedInUser);
-				console.log(`logged in user ${email}`);
+						const errorCode = error.code;
+						const errorMessage = error.message;
+						const doesntExist = errorCode === "auth/user-not-found";
+						console.log("Login failed. ", errorMessage);
+						//todo: show feedback message to user
+					});
+
 				// animationFrame = window.requestAnimationFrame(() => {
 				// 	navigateTo("/main", history);
 				// });
-			} catch (err) {}
+			} catch (err) {
+				console.log(err);
+				debugger;
+			}
 		},
 		[history, navigateTo, setUser]
 	);

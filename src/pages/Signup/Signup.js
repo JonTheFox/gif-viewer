@@ -32,6 +32,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import ImageUploader from "../../components/ImageUploader/ImageUploader.jsx";
 import navigateTo from "../../lib/navigateTo.js";
 
+import firebase from "../../firebase/firebase.js";
+import "firebase/auth";
 import "firebase/storage";
 import { storage } from "../../firebase/firebase.js";
 
@@ -268,7 +270,7 @@ export default function Signup(props) {
 		accountData: {},
 		activeStep,
 	});
-	const [showFeedback, setshowFeedback] = useState(false);
+	const [showFeedback, setShowFeedback] = useState(false);
 	const [feedback, setFeedback] = useState({});
 	const [isFormValid, setIsFormValid] = useState(false);
 	const [profilePic, setProfilePic] = useState({});
@@ -304,7 +306,52 @@ export default function Signup(props) {
 			// allFormsData.street_number = parseInt(addressData.street_number);
 			// allFormsData.bday = new Date();
 
-			//todo: request to sign up user
+			const { email, password } = allFormsData;
+
+			//add user
+			firebase
+				.auth()
+				.createUserWithEmailAndPassword(email, password)
+				.then((userCredential) => {
+					// Signed in
+					setUser({
+						...getPublicUserInfo(allFormsData),
+						password: accountData.password,
+					});
+
+					setFeedback({
+						heading: "Great Success!",
+						bodyText: `You are now ready to go.`,
+						btnText: "continue",
+						handleBtnClick: () => {
+							navigateTo("/client-type-select", history);
+						},
+					});
+					return setShowFeedback(true);
+					// ...
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+
+					const errorMessage = error.message;
+
+					const alreadyExists =
+						errorCode === "auth/email-already-in-use";
+
+					if (alreadyExists) {
+						setShowFeedback(true);
+						setFeedback({
+							heading: `Hey, ${refs.current.first_name}, `,
+							bodyText: `You already have an account (which is great).`,
+							btnText: "Login",
+							handleBtnClick: handleLogin,
+						});
+						return;
+					}
+
+					debugger;
+				});
+
 			// const ajaxResult = await request(
 			// 	"POST",
 			// 	ENDPOINTS.users.POST.signup.path,
@@ -314,7 +361,7 @@ export default function Signup(props) {
 			// const { error, alreadyExists, success, reason, data } = ajaxResult;
 
 			// if (alreadyExists) {
-			// 	setshowFeedback(true);
+			// 	setShowFeedback(true);
 			// 	setFeedback({
 			// 		heading: `Hey, ${refs.current.first_name}, `,
 			// 		bodyText: `You already have an account (which is great).`,
@@ -330,22 +377,8 @@ export default function Signup(props) {
 			// 	throw new Error("Did not receive any data from the server");
 
 			// //success
-			setUser({
-				...getPublicUserInfo(allFormsData),
-				password: accountData.password,
-			});
-
-			setshowFeedback(true);
-			return setFeedback({
-				heading: "Great Success!",
-				bodyText: `You are now ready to go.`,
-				btnText: "continue",
-				handleBtnClick: () => {
-					navigateTo("/client-type-select", history);
-				},
-			});
 		} catch (err) {
-			setshowFeedback(true);
+			setShowFeedback(true);
 			return setFeedback({
 				heading: `Hmm.`,
 				bodyText:
@@ -360,9 +393,9 @@ export default function Signup(props) {
 	}, [
 		refs.current,
 		setUser,
-		setshowFeedback,
+		setShowFeedback,
 		setFeedback,
-		setshowFeedback,
+		setShowFeedback,
 		handleNext,
 	]);
 
@@ -417,6 +450,9 @@ export default function Signup(props) {
 
 	function getFormComponent(step, refs) {
 		const form = FORMS[step];
+		if (!form) {
+			return null;
+		}
 		const { fields = [], label } = form;
 
 		// refs.current.validateFormData && refs.current.validateFormData();
@@ -625,7 +661,7 @@ export default function Signup(props) {
 
 	const handleTryAgain = useCallback(
 		(val) => {
-			setshowFeedback(false);
+			setShowFeedback(false);
 			refs.current.setIsFormValid(true);
 			//setActiveStep((step) => step - 1);
 		},
@@ -634,10 +670,10 @@ export default function Signup(props) {
 
 	const handleLogin = useCallback(
 		(val) => {
-			setshowFeedback(false);
+			setShowFeedback(false);
 			navigateTo("/login", history);
 		},
-		[setshowFeedback]
+		[setShowFeedback]
 	);
 
 	const { heading, bodyText, btnText, handleBtnClick } = feedback;

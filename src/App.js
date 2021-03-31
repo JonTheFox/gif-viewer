@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/styles";
 import View from "./components/layout/View.jsx";
