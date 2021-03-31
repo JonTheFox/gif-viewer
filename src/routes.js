@@ -28,14 +28,16 @@ const AppRoutes = (props) => {
 	if (!user) {
 		return (
 			<Suspense fallback={<GlowingLoader />}>
-				<Route path={`${baseRoute}signup`}>
-					<LazySignup route={route} />
-				</Route>
-				<Route path={`${baseRoute}login`}>
-					<LazyLogin route={route} />
-				</Route>
+				<Switch location={location}>
+					<Route path={`${baseRoute}signup`}>
+						<LazySignup route={route} />
+					</Route>
+					<Route path={`${baseRoute}login`}>
+						<LazyLogin route={route} />
+					</Route>
 
-				<Redirect to={`${baseRoute}login`} />
+					<Redirect to={`${baseRoute}login`} />
+				</Switch>
 			</Suspense>
 		);
 	}

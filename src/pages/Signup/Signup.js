@@ -597,7 +597,7 @@ export default function Signup(props) {
 									}}
 									helperText={
 										type === "password" &&
-										"Password must be at least 8 characters long and must include at least 1 uppercase letter, lowercase letter and a digit."
+										"Password must be at least 8 characters long and must include an uppercase letter, a lowercase letter and a digit."
 									}
 									select={type === "select"}
 									type={type}
